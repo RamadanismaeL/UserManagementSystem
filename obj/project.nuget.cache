@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zigV20aQyXI=",
+  "success": true,
+  "projectFilePath": "/home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/userManagementSystemBack.csproj",
+  "expectedPackageFiles": [
+    "/home/ramadan/.nuget/packages/microsoft.aspnetcore.openapi/9.0.0/microsoft.aspnetcore.openapi.9.0.0.nupkg.sha512",
+    "/home/ramadan/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
