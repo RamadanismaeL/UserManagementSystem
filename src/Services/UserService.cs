@@ -79,9 +79,25 @@ namespace userManagementSystemBack.src.Services
             return response;
         }
 
-        public Task<ResponseModel<UserGetAllDto>> Update(UpdateUserDto userDto, int id)
+        public async Task<ResponseModel<UserGetAllDto>> Update(UpdateUserDto userDto, int id)
         {
-            throw new NotImplementedException();
+            var response = new ResponseModel<UserGetAllDto>();
+            try
+            {
+                if(id <= 0)
+                {
+                    response.Message = "Invalid ID.";
+                    response.Status = false;
+                    return response;
+                }
+                var userExist = await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == id) ?? throw new KeyNotFoundException($"{id} is not found!");
+            }
+            catch(Exception error)
+            {
+                response.Message = $"An error occurred while updating the user: {error.Message}";
+                response.Status = false;
+            }
+            return response;
         }
 
         public Task<ResponseModel<UserGetAllDto>> Delete(int id)
