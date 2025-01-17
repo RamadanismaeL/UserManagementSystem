@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using userManagementSystemBack.src.Data;
 using userManagementSystemBack.src.Dtos.UserDto;
 using userManagementSystemBack.src.Interfaces;
@@ -54,10 +55,16 @@ namespace userManagementSystemBack.src.Services
 
         public async Task<ResponseModel<List<UserGetAllDto>>> ReadAll()
         {
-            var response = new ResponseModel<UserGetAllDto>();
+            var response = new ResponseModel<List<UserGetAllDto>>();
             try
             {
                 var userList = await _dataContext.Users.ToListAsync();
+                if(userList == null)
+                {
+                    response.Message = "No users found.";
+                    response.Status = false;
+                    return response;
+                }
             }
             catch(Exception error)
             {
