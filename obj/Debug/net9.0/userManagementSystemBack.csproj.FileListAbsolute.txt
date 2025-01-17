@@ -6,6 +6,7 @@
 /home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/bin/Debug/net9.0/userManagementSystemBack.runtimeconfig.json
 /home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/bin/Debug/net9.0/userManagementSystemBack.dll
 /home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/bin/Debug/net9.0/userManagementSystemBack.pdb
+/home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/bin/Debug/net9.0/AutoMapper.dll
 /home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/bin/Debug/net9.0/BCrypt.Net-Next.dll
 /home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/bin/Debug/net9.0/Humanizer.dll
 /home/ramadan/Documents/Projects/User Management System/userManagementSystemBack/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
