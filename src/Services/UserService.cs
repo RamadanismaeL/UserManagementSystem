@@ -42,7 +42,7 @@ namespace userManagementSystemBack.src.Services
 
                 var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
                 response.Datas = getUserDto;
-                response.Message = "User Successfuly registered!";
+                response.Message = "User successfully registered!";
                 response.Status = true;
             }
             catch(Exception error)
@@ -91,6 +91,22 @@ namespace userManagementSystemBack.src.Services
                     return response;
                 }
                 var userExist = await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == id) ?? throw new KeyNotFoundException($"{id} is not found!");
+                if(userExist == null)
+                {
+                    response.Message = "User not found";
+                    response.Status = false;
+                    return response;
+                }
+
+                userExist.DateUpdate = DateTime.Now;
+                var userMap = _mapper.Map(userDto, userExist);
+                _dataContext.Users.Update(userMap);
+                await _dataContext.SaveChangesAsync();
+
+                var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
+                response.Datas = getUserDto;
+                response.Message = "User successfully updated!";
+                response.Status = true;
             }
             catch(Exception error)
             {
