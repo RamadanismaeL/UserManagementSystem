@@ -1,4 +1,3 @@
-
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using userManagementSystemBack.src.Data;
@@ -116,9 +115,40 @@ namespace userManagementSystemBack.src.Services
             return response;
         }
 
-        public Task<ResponseModel<UserGetAllDto>> Delete(int id)
+        public async Task<ResponseModel<UserGetAllDto>> Delete(int id)
         {
-            throw new NotImplementedException();
+            var response = new ResponseModel<UserGetAllDto>();
+            try
+            {
+                if(id <= 0)
+                {
+                    response.Message = "Invalid ID.";
+                    response.Status = false;
+                    return response;
+                }
+                var userExist = await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == id) ?? throw new KeyNotFoundException($"{id} is not found!");
+                if(userExist == null)
+                {
+                    response.Message = "User not found";
+                    response.Status = false;
+                    return response;
+                }
+
+                var userMap = _mapper.Map<UserModel>(userExist);
+                _dataContext.Users.Remove(userExist);
+                await _dataContext.SaveChangesAsync();
+
+                var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
+                response.Datas = getUserDto;
+                response.Message = "User successfully deleted!";
+                response.Status = true;
+            }
+            catch(Exception error)
+            {
+                response.Message = $"An error occurred while deleting the user: {error.Message}";
+                response.Status = false;
+            }
+            return response;
         }
     }
 }
