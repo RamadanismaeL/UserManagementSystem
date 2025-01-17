@@ -65,12 +65,18 @@ namespace userManagementSystemBack.src.Services
                     response.Status = false;
                     return response;
                 }
+
+                var getUserDto = _mapper.Map<List<UserGetAllDto>>(userList);
+                response.Datas = getUserDto;
+                response.Message = "Users successfuly retrieved!";
+                response.Status = true;
             }
             catch(Exception error)
             {
                 response.Message = $"An error occurred while retrieving the user: {error.Message}";
                 response.Status = false;
             }
+            return response;
         }
 
         public Task<ResponseModel<UserGetAllDto>> Update(UpdateUserDto userDto, int id)
