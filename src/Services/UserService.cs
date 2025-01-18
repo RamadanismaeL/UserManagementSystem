@@ -33,16 +33,28 @@ namespace userManagementSystemBack.src.Services
                     response.Status = false;
                     return response;
                 }
+                else
+                {
+                   var email = await _dataContext.Users.SingleOrDefaultAsync(u => u.Email == userDto.Email);
+                    if(email != null)
+                    {
+                        response.Message = "Email already exists.";
+                        response.Status = false;
+                        return response;
+                    }
+                    else
+                    {
+                        userDto.SetPassword();
+                        var userMap = _mapper.Map<UserModel>(userDto);
+                        await _dataContext.Users.AddAsync(userMap);
+                        await _dataContext.SaveChangesAsync();
 
-                userDto.SetPassword();
-                var userMap = _mapper.Map<UserModel>(userDto);
-                await _dataContext.Users.AddAsync(userMap);
-                await _dataContext.SaveChangesAsync();
-
-                var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
-                response.Datas = getUserDto;
-                response.Message = "User successfully registered!";
-                response.Status = true;
+                        var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
+                        response.Datas = getUserDto;
+                        response.Message = "User successfully registered!";
+                        response.Status = true;
+                    }
+                }
             }
             catch(Exception error)
             {
@@ -57,18 +69,27 @@ namespace userManagementSystemBack.src.Services
             var response = new ResponseModel<List<UserGetAllDto>>();
             try
             {
-                var userList = await _dataContext.Users.ToListAsync();
-                if(userList == null)
+                if(_dataContext == null)
                 {
-                    response.Message = "No users found.";
+                    response.Message = "Internal error: Database service is not configured.";
                     response.Status = false;
                     return response;
                 }
+                else
+                {
+                    var userList = await _dataContext.Users.ToListAsync();
+                    if(userList == null)
+                    {
+                        response.Message = "No users found.";
+                        response.Status = false;
+                        return response;
+                    }
 
-                var getUserDto = _mapper.Map<List<UserGetAllDto>>(userList);
-                response.Datas = getUserDto;
-                response.Message = "Users successfuly retrieved!";
-                response.Status = true;
+                    var getUserDto = _mapper.Map<List<UserGetAllDto>>(userList);
+                    response.Datas = getUserDto;
+                    response.Message = "Users successfuly retrieved!";
+                    response.Status = true;
+                }
             }
             catch(Exception error)
             {
@@ -83,28 +104,52 @@ namespace userManagementSystemBack.src.Services
             var response = new ResponseModel<UserGetAllDto>();
             try
             {
-                if(userDto.Id <= 0)
+                if(_dataContext == null)
                 {
-                    response.Message = "Invalid ID.";
+                    response.Message = "Internal error: Database service is not configured.";
                     response.Status = false;
                     return response;
                 }
-                var userExist = await _dataContext.Users.FindAsync(userDto.Id);
-                if(userExist == null)
+                else
                 {
-                    response.Message = "User not found";
-                    response.Status = false;
-                    return response;
+                    if(userDto.Id <= 0)
+                    {
+                        response.Message = "Invalid ID.";
+                        response.Status = false;
+                        return response;
+                    }
+                    else
+                    {
+                        var userExist = await _dataContext.Users.FindAsync(userDto.Id);
+                        if(userExist == null)
+                        {
+                            response.Message = "User not found";
+                            response.Status = false;
+                            return response;
+                        }
+                        else
+                        {
+                            var email = await _dataContext.Users.SingleOrDefaultAsync(u => u.Email == userDto.Email);
+                            if(email != null)
+                            {
+                                response.Message = "Email already exists.";
+                                response.Status = false;
+                                return response;
+                            }
+                            else
+                            {
+                                var userMap = _mapper.Map(userDto, userExist);
+                                _dataContext.Users.Update(userMap);
+                                await _dataContext.SaveChangesAsync();
+
+                                var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
+                                response.Datas = getUserDto;
+                                response.Message = "User successfully updated!";
+                                response.Status = true;
+                            }
+                        }
+                    }
                 }
-
-                var userMap = _mapper.Map(userDto, userExist);
-                _dataContext.Users.Update(userMap);
-                await _dataContext.SaveChangesAsync();
-
-                var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
-                response.Datas = getUserDto;
-                response.Message = "User successfully updated!";
-                response.Status = true;
             }
             catch(Exception error)
             {
@@ -114,9 +159,9 @@ namespace userManagementSystemBack.src.Services
             return response;
         }
 
-        public async Task<ResponseModel<UserGetAllDto>> Delete(int id)
+        public async Task<ResponseModel<string>> Delete(int id)
         {
-            var response = new ResponseModel<UserGetAllDto>();
+            var response = new ResponseModel<string>();
             try
             {
                 if(id <= 0)
@@ -125,22 +170,25 @@ namespace userManagementSystemBack.src.Services
                     response.Status = false;
                     return response;
                 }
-                var userExist = await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == id) ?? throw new KeyNotFoundException($"{id} is not found!");
-                if(userExist == null)
+                else
                 {
-                    response.Message = "User not found";
-                    response.Status = false;
-                    return response;
+                    var userExist = await _dataContext.Users.SingleOrDefaultAsync(u => u.Id == id);
+                    if(userExist == null)
+                    {
+                        response.Message = "User not found";
+                        response.Status = false;
+                        return response;
+                    }
+                    else
+                    {
+                        _dataContext.Users.Remove(userExist);
+                        await _dataContext.SaveChangesAsync();
+
+                        response.Datas = userExist.Name;
+                        response.Message = "User successfully deleted!";
+                        response.Status = true;
+                    }
                 }
-
-                var userMap = _mapper.Map<UserModel>(userExist);
-                _dataContext.Users.Remove(userExist);
-                await _dataContext.SaveChangesAsync();
-
-                var getUserDto = _mapper.Map<UserGetAllDto>(userMap);
-                response.Datas = getUserDto;
-                response.Message = "User successfully deleted!";
-                response.Status = true;
             }
             catch(Exception error)
             {

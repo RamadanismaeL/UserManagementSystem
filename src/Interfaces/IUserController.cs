@@ -8,6 +8,6 @@ namespace userManagementSystemBack.src.Interfaces
         Task<IActionResult> Create([FromBody] CreateUserDto userDto);
         Task<IActionResult> ReadAll();
         Task<IActionResult> Update([FromBody] UpdateUserDto userDto, [FromRoute] int id);
-        Task<IActionResult> Delete(int id);
+        Task<IActionResult> Delete([FromRoute] int id);
     }
 }

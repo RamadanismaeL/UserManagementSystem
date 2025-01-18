@@ -78,14 +78,14 @@ namespace userManagementSystemBack.src.Controllers
 
         [HttpDelete]
         [Route("delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
             {
                 if(!ModelState.IsValid) return BadRequest(ModelState);
-                var usuario = await _userService.Delete(id);
-                if(usuario.Status == false) return NotFound(usuario);
-                return NoContent();
+                var user = await _userService.Delete(id);
+                if(user.Status == false) return NotFound(user);
+                return Ok(user);
             }
             catch (Exception error)
             {
