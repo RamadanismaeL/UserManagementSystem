@@ -38,7 +38,8 @@ namespace userManagementSystemBack.Migrations
                         .HasDefaultValueSql("current_timestamp");
 
                     b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("dateUpdate");
 
                     b.Property<string>("Email")
                         .IsRequired()

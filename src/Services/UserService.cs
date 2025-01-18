@@ -78,18 +78,18 @@ namespace userManagementSystemBack.src.Services
             return response;
         }
 
-        public async Task<ResponseModel<UserGetAllDto>> Update(UpdateUserDto userDto, int id)
+        public async Task<ResponseModel<UserGetAllDto>> Update(UpdateUserDto userDto)
         {
             var response = new ResponseModel<UserGetAllDto>();
             try
             {
-                if(id <= 0)
+                if(userDto.Id <= 0)
                 {
                     response.Message = "Invalid ID.";
                     response.Status = false;
                     return response;
                 }
-                var userExist = await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == id) ?? throw new KeyNotFoundException($"{id} is not found!");
+                var userExist = await _dataContext.Users.FindAsync(userDto.Id);
                 if(userExist == null)
                 {
                     response.Message = "User not found";
@@ -97,7 +97,6 @@ namespace userManagementSystemBack.src.Services
                     return response;
                 }
 
-                userExist.DateUpdate = DateTime.Now;
                 var userMap = _mapper.Map(userDto, userExist);
                 _dataContext.Users.Update(userMap);
                 await _dataContext.SaveChangesAsync();

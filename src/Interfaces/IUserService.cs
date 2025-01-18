@@ -11,7 +11,7 @@ namespace userManagementSystemBack.src.Interfaces
     {
         Task<ResponseModel<UserGetAllDto>> Create(CreateUserDto userDto);
         Task<ResponseModel<List<UserGetAllDto>>> ReadAll();
-        Task<ResponseModel<UserGetAllDto>> Update(UpdateUserDto userDto, int id);
+        Task<ResponseModel<UserGetAllDto>> Update(UpdateUserDto userDto);
         Task<ResponseModel<UserGetAllDto>> Delete(int id);
     }
 }

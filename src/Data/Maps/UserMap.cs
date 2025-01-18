@@ -67,7 +67,7 @@ namespace userManagementSystemBack.src.Data.Maps
                 .IsRequired();
 
                 builder.Property<DateTime>(u => u.DateUpdate)
-                .HasColumnType("dateUpdate")
+                .HasColumnName("dateUpdate")
                 .HasColumnType("datetime");
             }
             catch (Exception error)

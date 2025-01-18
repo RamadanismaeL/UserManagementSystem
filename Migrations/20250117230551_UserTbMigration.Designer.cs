@@ -12,8 +12,8 @@ using userManagementSystemBack.src.Data;
 namespace userManagementSystemBack.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250117185532_UserTbMigrations")]
-    partial class UserTbMigrations
+    [Migration("20250117230551_UserTbMigration")]
+    partial class UserTbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,7 +41,8 @@ namespace userManagementSystemBack.Migrations
                         .HasDefaultValueSql("current_timestamp");
 
                     b.Property<DateTime>("DateUpdate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("dateUpdate");
 
                     b.Property<string>("Email")
                         .IsRequired()

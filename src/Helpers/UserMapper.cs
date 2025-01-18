@@ -12,7 +12,8 @@ namespace userManagementSystemBack.src.Helpers
         {
             CreateMap<UserModel, UserGetAllDto>();
             CreateMap<CreateUserDto, UserModel>();
-            CreateMap<UpdateUserDto, UserModel>();
+            CreateMap<UpdateUserDto, UserModel>()
+            .ForMember(u => u.DateUpdate, opt => opt.MapFrom(src => src.DateUpdate));
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace userManagementSystemBack.Migrations
 {
     /// <inheritdoc />
-    public partial class UserTbMigrations : Migration
+    public partial class UserTbMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,7 @@ namespace userManagementSystemBack.Migrations
                     profile = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     status = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     dateRegister = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "current_timestamp"),
-                    DateUpdate = table.Column<DateTime>(type: "datetime", nullable: false)
+                    dateUpdate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
