@@ -1,3 +1,22 @@
+@use "../../../color-variables.scss" as *;
+
 *{
   padding: 0 10%;
+}
+
+footer {
+  font-family: "Popins", sans-serif;
+  font-weight: 300;
+  hr, a {
+    color: $font2;
+  }
+
+  a {
+    display: inline-block;
+    background-color: transparent;
+  }
+}
+
+span {
+  padding: 0;
 }
