@@ -100,6 +100,7 @@
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.csproj.CoreCompileInputs.cache
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.MvcApplicationPartsAssemblyInfo.cs
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.MvcApplicationPartsAssemblyInfo.cache
+/home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.sourcelink.json
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/scopedcss/bundle/UserManagementSystemBack.styles.css
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/staticwebassets.build.json
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/staticwebassets.development.json
@@ -116,4 +117,3 @@
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.pdb
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.genruntimeconfig.cache
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/ref/UserManagementSystemBack.dll
-/home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.sourcelink.json

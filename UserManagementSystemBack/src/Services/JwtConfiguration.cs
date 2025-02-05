@@ -45,6 +45,8 @@ namespace UserManagementSystemBack.src.Services
                     ClockSkew = TimeSpan.FromMilliseconds(900)
                 };
             });
+            
+            /*
             service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
@@ -68,8 +70,8 @@ namespace UserManagementSystemBack.src.Services
                     Response.Cookies.Delete("MyAppCookie");  // Exclui o cookie ao sair
                     return RedirectToAction("Index", "Home");
                 }
-                */
             });
+            */
         }
     }
 }
