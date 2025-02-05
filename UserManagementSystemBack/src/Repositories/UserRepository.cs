@@ -80,14 +80,144 @@ namespace UserManagementSystemBack.src.Repositories
             return response;
         }
 
-        public Task<ResponseModel<List<RUserDto>>> ReadAll()
+        public async Task<ResponseModel<List<RUserDto>>> ReadAll()
         {
-            throw new NotImplementedException();
+            var response = new ResponseModel<List<RUserDto>>();
+            try
+            {
+                if(_dataContext == null)
+                {
+                    response.Message = "The database is not connected";
+                    response.Status = false;
+                }
+                else
+                {
+                    var userList = await _dataContext.Users.ToListAsync();
+                    if(userList.Count == 0)
+                    {
+                        response.Message = "No users found.";
+                        response.Status = false;
+                    }
+
+                    var getUsers = _mapper.Map<List<RUserDto>>(userList);
+                    response.Datas = getUsers;
+                    response.Message = "Users read successfully.";
+                    response.Status = true;
+                }
+            }
+            catch(Exception error)
+            {
+                response.Message = $"An error occurred while reading the users: {error.Message}";
+                response.Status = false;
+            }
+            return response;
         }
 
-        public Task<ResponseModel<RUserDto>> Update(UUserDto user)
+        public async Task<ResponseModel<RUserDto>> Update(UUserDto user)
         {
-            throw new NotImplementedException();
+            var response = new ResponseModel<RUserDto>();
+            var userExist = await _dataContext.Users.SingleOrDefaultAsync(u => u.Id == user.Id);
+            var allData = await _dataContext.Users
+                .Where(u => u.Id == user.Id)
+                .Select(u => new
+                {
+                    u.FirstName,
+                    u.LastName,
+                    u.PhoneNumber,
+                    u.Email,
+                    u.UserName,
+                    u.Profile,
+                    u.Status
+                })
+                .FirstOrDefaultAsync();
+            var email_username_exit = await _dataContext.Users
+                .Where(u => u.Id == user.Id)
+                .Select(u => new
+                {
+                    u.Email,
+                    u.UserName
+                })
+                .FirstOrDefaultAsync();
+            var emailExist = await _dataContext.Users.AnyAsync(u => u.Email == user.Email);
+            var userNameExist = await _dataContext.Users.AnyAsync(u => u.UserName == user.UserName);
+
+            try
+            {
+                if(_dataContext == null)
+                {
+                    response.Message = "The database is not connected";
+                    response.Status = false;
+                }
+                else
+                {
+                    if(user.Id <= 0 || userExist == null)
+                    {
+                        response.Message = "The user not found.";
+                        response.Status = false;
+                    }
+                    else
+                    {
+                        if(allData is not null &&
+                        allData.FirstName == user.FirstName &&
+                        allData.LastName == user.LastName &&
+                        allData.PhoneNumber == user.PhoneNumber &&
+                        allData.Email == user.Email &&
+                        allData.UserName == user.UserName &&
+                        allData.Profile == user.Profile &&
+                        allData.Status == user.Status)
+                        {
+                            response.Message = "No changes were made.";
+                            response.Status = false;
+                        }
+                        else
+                        {
+                            if(email_username_exit is not null &&
+                            email_username_exit.Email == user.Email &&
+                            email_username_exit.UserName == user.UserName)
+                            {
+                                var userMap = _mapper.Map(user, userExist);
+                                _dataContext.Users.Update(userMap);
+                                await _dataContext.SaveChangesAsync();
+
+                                var getUser = _mapper.Map<RUserDto>(userMap);
+                                response.Datas = getUser;
+                                response.Message = "User updated successfully.";
+                                response.Status = true;
+                            }
+                            else
+                            {
+                                if(emailExist && user.Email != email_username_exit?.Email)
+                                {
+                                    response.Message = "Please choose a different email.";
+                                    response.Status = false;
+                                }
+                                else if(userNameExist && user.UserName != email_username_exit?.UserName)
+                                {
+                                    response.Message = "Username not available.";
+                                    response.Status = false;
+                                }
+                                else
+                                {
+                                    var userMap = _mapper.Map(user, userExist);
+                                    _dataContext.Users.Update(userMap);
+                                    await _dataContext.SaveChangesAsync();
+
+                                    var getUser = _mapper.Map<RUserDto>(userMap);
+                                    response.Datas = getUser;
+                                    response.Message = "User updated successfully.";
+                                    response.Status = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception error)
+            {
+                response.Message = $"An error occurred while updating the user: {error.Message}";
+                response.Status = false;
+            }
+            return response;
         }
 
         public Task<ResponseModel<string>> Delete(int id)
