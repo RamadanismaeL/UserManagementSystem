@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using UserManagementSystemBack.src.Data;
 using UserManagementSystemBack.src.Services;
 
 /**
@@ -19,6 +21,7 @@ var getServer = Environment.GetEnvironmentVariable("DB_SERVER") ?? throw new Inv
 //Console.WriteLine($"DB_USERNAME: {getUserName} \n DB_PASSWORD: {getPassword} \n DB_PORT: {getPort} \n DB_SERVER: {getServer}");
 string connect = $"server={getServer}; port={getPort}; database=db_user_management_system; user={getUserName}; password={getPassword}; Persist Security Info=False; Connect Timeout=300";
 
+builder.Services.AddDbContextPool<UserManagementSystem_db>(ram => ram.UseMySql(connect, ServerVersion.AutoDetect(connect)));
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
