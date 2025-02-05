@@ -220,14 +220,46 @@ namespace UserManagementSystemBack.src.Repositories
             return response;
         }
 
-        public Task<ResponseModel<string>> Delete(int id)
+        public async Task<ResponseModel<string>> Delete(int id)
         {
-            throw new NotImplementedException();
+            var response = new ResponseModel<string>();
+            try
+            {
+                if(_dataContext == null)
+                {
+                    response.Message = "The database is not connected";
+                    response.Status = false;
+                }
+                else
+                {
+                    var userExist = await _dataContext.Users.SingleOrDefaultAsync(u => u.Id == id);
+                    if(id <= 0 || userExist == null)
+                    {
+                        response.Message = "The user not found.";
+                        response.Status = false;
+                    }
+                    else
+                    {
+                        _dataContext.Users.Remove(userExist);
+                        await _dataContext.SaveChangesAsync();
+                        
+                        response.Datas = "{\n\tFullName : "+userExist.FirstName+" "+userExist.LastName+"\n\tUserName : "+userExist.UserName+"\n\tEmail : "+userExist.Email+"\n\tProfile : "+userExist.Profile+"\n}";
+                        response.Message = "User deleted successfully.";
+                        response.Status = true;
+                    }
+                }
+            }
+            catch(Exception error)
+            {
+                response.Message = $"An error occurred while deleting the user: {error.Message}";
+                response.Status = false;
+            }
+            return response;
         }
 
-        public Task<UserModel> FindByUserName(string userName)
+        public async Task<UserModel> FindUserName(string userName)
         {
-            throw new NotImplementedException();
+            return await _dataContext.Users.FirstOrDefaultAsync(u => (u.UserName ?? "").Equals(userName, StringComparison.Ordinal)) ?? throw new Exception("User not found.");
         }
 
         

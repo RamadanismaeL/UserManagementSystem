@@ -13,6 +13,6 @@ namespace UserManagementSystemBack.src.Interfaces
         Task<ResponseModel<List<RUserDto>>> ReadAll();
         Task<ResponseModel<RUserDto>> Update(UUserDto user);
         Task<ResponseModel<string>> Delete(int id);
-        Task<UserModel> FindByUserName(string userName);
+        Task<UserModel> FindUserName(string userName);
     }
 }
