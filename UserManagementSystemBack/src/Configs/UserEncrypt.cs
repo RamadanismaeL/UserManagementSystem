@@ -2,7 +2,7 @@
 *@author Ramadan Ismael
 */
 
-namespace UserManagementSystemBack.src.Services
+namespace UserManagementSystemBack.src.Configs
 {
     public static class UserEncrypt
     {

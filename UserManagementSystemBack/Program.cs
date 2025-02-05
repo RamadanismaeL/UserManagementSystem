@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using UserManagementSystemBack.src.Data;
-using UserManagementSystemBack.src.Services;
+using UserManagementSystemBack.src.Configs;
 
 /**
 ** @author Ramadan Ismael

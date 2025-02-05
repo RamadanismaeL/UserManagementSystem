@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 /**
 ** @author Ramadan Ismael
 */
-namespace UserManagementSystemBack.src.Services
+namespace UserManagementSystemBack.src.Configs
 {
     public static class JwtConfiguration
     {

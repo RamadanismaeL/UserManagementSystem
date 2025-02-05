@@ -3,7 +3,7 @@
 */
 using System.ComponentModel.DataAnnotations;
 using UserManagementSystemBack.src.Enums;
-using UserManagementSystemBack.src.Services;
+using UserManagementSystemBack.src.Configs;
 
 namespace UserManagementSystemBack.src.Models
 {
