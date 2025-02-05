@@ -116,3 +116,4 @@
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.pdb
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.genruntimeconfig.cache
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/ref/UserManagementSystemBack.dll
+/home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.sourcelink.json
