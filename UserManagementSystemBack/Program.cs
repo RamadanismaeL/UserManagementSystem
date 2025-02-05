@@ -4,6 +4,8 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using UserManagementSystemBack.src.Data;
 using UserManagementSystemBack.src.Configs;
+using UserManagementSystemBack.src.Interfaces;
+using UserManagementSystemBack.src.Repositories;
 
 /**
 ** @author Ramadan Ismael
@@ -67,6 +69,9 @@ static void ConfigureJwtAuthentication(SwaggerGenOptions options)
         { securitySchema, new[] { "Bearer" } }
     });
 }
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(typeof(UserMap));
 
 builder.Services.AddCors(options =>
 {

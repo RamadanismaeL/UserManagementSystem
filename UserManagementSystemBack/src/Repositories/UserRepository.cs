@@ -96,13 +96,15 @@ namespace UserManagementSystemBack.src.Repositories
                     if(userList.Count == 0)
                     {
                         response.Message = "No users found.";
-                        response.Status = false;
+                        response.Status = true;
                     }
-
-                    var getUsers = _mapper.Map<List<RUserDto>>(userList);
-                    response.Datas = getUsers;
-                    response.Message = "Users read successfully.";
-                    response.Status = true;
+                    else
+                    {
+                        var getUsers = _mapper.Map<List<RUserDto>>(userList);
+                        response.Datas = getUsers;
+                        response.Message = "Users read successfully.";
+                        response.Status = true;
+                    }
                 }
             }
             catch(Exception error)
@@ -243,7 +245,7 @@ namespace UserManagementSystemBack.src.Repositories
                         _dataContext.Users.Remove(userExist);
                         await _dataContext.SaveChangesAsync();
                         
-                        response.Datas = "{\n\tFullName : "+userExist.FirstName+" "+userExist.LastName+"\n\tUserName : "+userExist.UserName+"\n\tEmail : "+userExist.Email+"\n\tProfile : "+userExist.Profile+"\n}";
+                        response.Datas = "FullName : "+userExist.FirstName+" "+userExist.LastName;
                         response.Message = "User deleted successfully.";
                         response.Status = true;
                     }
@@ -260,8 +262,6 @@ namespace UserManagementSystemBack.src.Repositories
         public async Task<UserModel> FindUserName(string userName)
         {
             return await _dataContext.Users.FirstOrDefaultAsync(u => (u.UserName ?? "").Equals(userName, StringComparison.Ordinal)) ?? throw new Exception("User not found.");
-        }
-
-        
+        }   
     }
 }
