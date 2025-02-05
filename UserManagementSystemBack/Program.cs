@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 string getUserFront = configuration["Origins:userFront"] ?? throw new InvalidOperationException("Origins:userFront is not set");
-Console.WriteLine($"Origins:userFront: {getUserFront}");
+//Console.WriteLine($"Origins:userFront: {getUserFront}");
 var getUserName = Environment.GetEnvironmentVariable("DB_USERNAME") ?? throw new InvalidOperationException("DB_USERNAME is not set");
 var getPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? throw new InvalidOperationException("DB_PASSWORD is not set");
 var getPort = Environment.GetEnvironmentVariable("DB_PORT") ?? throw new InvalidOperationException("DB_PORT is not set");
@@ -39,9 +39,9 @@ static void ConfigureSwaggerDoc(SwaggerGenOptions options)
         Description = "A simple management system ASP.NET Core Web API",
         Contact = new OpenApiContact
         {
-            Name = "Ramadan Ismael",
-            Email = "ramadan.ismael02@gmail.com"
-            //Url = new Uri("https://www.linkedin.com/in/ramadan-ismael-0b1b3b1b3/")
+            Name = "Admin: Ramadan Ibraimo Ismael",
+            Email = "ramadan.ismael02@gmail.com",
+            Url = new Uri("https://github.com/RamadanismaeL")
         }
     });
 }

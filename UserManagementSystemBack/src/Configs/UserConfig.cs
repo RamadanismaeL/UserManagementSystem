@@ -67,7 +67,7 @@ namespace UserManagementSystemBack.src.Configs
 
                 builder.Property<UserStatusEnum>(u => u.Status)
                 .HasColumnName("status")
-                .HasDefaultValue(UserStatusEnum.Active)
+                .HasDefaultValue(UserStatusEnum.Inactive)
                 .IsRequired();
 
                 builder.Property<DateTime>(u => u.DateRegister)
