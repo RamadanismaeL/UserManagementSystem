@@ -53,12 +53,22 @@ namespace UserManagementSystemBack.src.Services
                 options.Cookie.SameSite = SameSiteMode.Strict; // Previne CSRF
                 options.Cookie.Name = "UserManagementSystemCookie";    // Nome personalizado para o cookie
                 options.Cookie.MaxAge = TimeSpan.FromMinutes(30);  // Expira após 30 minutos de inatividade
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);  // Tempo máximo toal da sessão
+                options.Cookie.IsEssential = true;   // O cookie é essencial para a aplicação
                 options.SlidingExpiration = true;  // Renova a expiração a cada requisição
                 options.Events.OnSigningOut = context =>
                 {
                     context.Response.Cookies.Delete("UserManagementSystemCookie");
                     return Task.CompletedTask;
                 };
+                /*
+                public async Task<IActionResult> Logout()
+                {
+                    await _signInManager.SignOutAsync();
+                    Response.Cookies.Delete("MyAppCookie");  // Exclui o cookie ao sair
+                    return RedirectToAction("Index", "Home");
+                }
+                */
             });
         }
     }
