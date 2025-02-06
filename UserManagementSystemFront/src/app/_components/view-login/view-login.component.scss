@@ -63,6 +63,7 @@
   align-items: center;
   padding-left: 10px;
   transition: 0.2s ease-in-out;
+  background-color: #110f1c;
 
   path {
     fill: #fff;
@@ -70,6 +71,7 @@
 }
 
 .input {
+  background-color: #110f1c;
   color: #fff;
   margin-left: 10px;
   border-radius: 10px;
@@ -79,10 +81,13 @@
 }
 
 .input:focus {
+  transition: .2s ease-in-out;
+  font-size: 14pt;
   outline: none;
 }
 
 .inputForm:focus-within {
+  transition: 0.4s ease-in-out;
   border: 1.5px solid #2d79f3;
 }
 
@@ -106,6 +111,10 @@
   color: #2d79f3;
   font-weight: 500;
   cursor: pointer;
+
+  &:hover {
+    color: #7cabf7;
+  }
 }
 
 .button-submit {
@@ -119,10 +128,25 @@
   height: 50px;
   width: 100%;
   cursor: pointer;
+
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.2s;
 }
 
 .button-submit:hover {
+  transition: .3s ease-in-out;
   background-color: #252727;
+  font-weight: 600;
+
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.button-submit:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .p {
@@ -150,7 +174,9 @@
 }
 
 .btn:hover {
-  border: 1px solid #2d79f3;
+  transition: .4s ease-in-out;
+  border: 1px solid #5291f5;
+  font-weight: 600;
 }
 
 .spans {
@@ -161,6 +187,10 @@
     display: inline-block;
     width: 2.7em;
     height: 1.4em;
+    .span {
+      position: absolute;
+      margin-left: 3.2em;
+    }
   }
 
   /* Hide default HTML checkbox */
