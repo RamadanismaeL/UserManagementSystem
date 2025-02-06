@@ -1,9 +1,10 @@
 /*
-*@author Ramadan Ismael
-*/
+ * @author Ramadan Ismael
+ */
 
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using UserManagementSystemBack.src.Data;
 using UserManagementSystemBack.src.DTOs.User;
 using UserManagementSystemBack.src.Interfaces;
@@ -15,253 +16,147 @@ namespace UserManagementSystemBack.src.Repositories
     {
         private readonly UserManagementSystem_db _dataContext;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserRepository> _logger;
 
-        public UserRepository(UserManagementSystem_db dataContext, IMapper mapper)
+        public UserRepository(UserManagementSystem_db dataContext, IMapper mapper, ILogger<UserRepository> logger)
         {
-            _dataContext = dataContext;
-            _mapper = mapper;
+            _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
         public async Task<ResponseModel<RUserDto>> Create(CUserDto user)
         {
-            var response = new ResponseModel<RUserDto>();
-            bool checkUserFullName = await _dataContext.Users
-                .AnyAsync(u => u.FirstName == user.FirstName && u.LastName == user.LastName);
-            bool checkUserEmail = await _dataContext.Users
-                .AnyAsync(u => u.Email == user.Email);
-            bool checkUserUserName = await _dataContext.Users
-                .AnyAsync(u => u.UserName == user.UserName);
+            if (user == null)
+                return BadRequestResponse<RUserDto>("User data is required.");
 
             try
             {
-                if(_dataContext == null)
-                {
-                    response.Message = "The database is not connected";
-                    response.Status = false;
-                }
-                else
-                {
-                    if(checkUserFullName)
-                    {
-                        response.Message = "The user not available.";
-                        response.Status = false;
-                    }
-                    else
-                    {
-                        if(checkUserEmail)
-                        {
-                            response.Message = "Please choose a different email.";
-                            response.Status = false;
-                        }
-                        else if(checkUserUserName)
-                        {
-                            response.Message = "Username not available.";
-                            response.Status = false;
-                        }
-                        else
-                        {
-                            user.SetPassword();
-                            var userMap = _mapper.Map<UserModel>(user);
-                            await _dataContext.Users.AddAsync(userMap);
-                            await _dataContext.SaveChangesAsync();
+                if (await UserExists(user))
+                    return ConflictResponse<RUserDto>("User not available.");
 
-                            var getUser = _mapper.Map<RUserDto>(userMap);
-                            response.Datas = getUser;
-                            response.Message = "User created successfully.";
-                            response.Status = true;
-                        }
-                    }
-                }
+                user.SetPassword();
+                var userEntity = _mapper.Map<UserModel>(user);
+                await _dataContext.Users.AddAsync(userEntity);
+                await _dataContext.SaveChangesAsync();
+
+                return new ResponseModel<RUserDto>
+                {
+                    Datas = _mapper.Map<RUserDto>(userEntity),
+                    Message = "User created successfully.",
+                    Status = true
+                };
             }
-            catch(Exception error)
+            catch (Exception error)
             {
-                response.Message = $"An error occurred while creating the user: {error.Message}";
-                response.Status = false;
+                _logger.LogError(error, "Error creating user.");
+                return ErrorResponse<RUserDto>("An unexpected error occurred.");
             }
-            return response;
         }
 
         public async Task<ResponseModel<List<RUserDto>>> ReadAll()
         {
-            var response = new ResponseModel<List<RUserDto>>();
             try
             {
-                if(_dataContext == null)
+                var users = await _dataContext.Users.AsNoTracking().ToListAsync();
+                return new ResponseModel<List<RUserDto>>
                 {
-                    response.Message = "The database is not connected";
-                    response.Status = false;
-                }
-                else
-                {
-                    var userList = await _dataContext.Users.ToListAsync();
-                    if(userList.Count == 0)
-                    {
-                        response.Message = "No users found.";
-                        response.Status = true;
-                    }
-                    else
-                    {
-                        var getUsers = _mapper.Map<List<RUserDto>>(userList);
-                        response.Datas = getUsers;
-                        response.Message = "Users read successfully.";
-                        response.Status = true;
-                    }
-                }
+                    Datas = _mapper.Map<List<RUserDto>>(users),
+                    Message = users.Any() ? "Users retrieved successfully." : "No users found.",
+                    Status = true
+                };
             }
-            catch(Exception error)
+            catch (Exception error)
             {
-                response.Message = $"An error occurred while reading the users: {error.Message}";
-                response.Status = false;
+                _logger.LogError(error, "Error reading users.");
+                return ErrorResponse<List<RUserDto>>("An unexpected error occurred.");
             }
-            return response;
         }
 
-        public async Task<ResponseModel<RUserDto>> Update(UUserDto user)
+        public async Task<ResponseModel<RUserDto>> Update(UUserDto user, int id)
         {
-            var response = new ResponseModel<RUserDto>();
-            var userExist = await _dataContext.Users.SingleOrDefaultAsync(u => u.Id == user.Id);
-            var allData = await _dataContext.Users
-                .Where(u => u.Id == user.Id)
-                .Select(u => new
-                {
-                    u.FirstName,
-                    u.LastName,
-                    u.PhoneNumber,
-                    u.Email,
-                    u.UserName,
-                    u.Profile,
-                    u.Status
-                })
-                .FirstOrDefaultAsync();
-            var email_username_exit = await _dataContext.Users
-                .Where(u => u.Id == user.Id)
-                .Select(u => new
-                {
-                    u.Email,
-                    u.UserName
-                })
-                .FirstOrDefaultAsync();
-            var emailExist = await _dataContext.Users.AnyAsync(u => u.Email == user.Email);
-            var userNameExist = await _dataContext.Users.AnyAsync(u => u.UserName == user.UserName);
+            if (user == null)
+                return BadRequestResponse<RUserDto>("User data is required.");
 
             try
             {
-                if(_dataContext == null)
-                {
-                    response.Message = "The database is not connected";
-                    response.Status = false;
-                }
-                else
-                {
-                    if(user.Id <= 0 || userExist == null)
-                    {
-                        response.Message = "The user not found.";
-                        response.Status = false;
-                    }
-                    else
-                    {
-                        if(allData is not null &&
-                        allData.FirstName == user.FirstName &&
-                        allData.LastName == user.LastName &&
-                        allData.PhoneNumber == user.PhoneNumber &&
-                        allData.Email == user.Email &&
-                        allData.UserName == user.UserName &&
-                        allData.Profile == user.Profile &&
-                        allData.Status == user.Status)
-                        {
-                            response.Message = "No changes were made.";
-                            response.Status = false;
-                        }
-                        else
-                        {
-                            if(email_username_exit is not null &&
-                            email_username_exit.Email == user.Email &&
-                            email_username_exit.UserName == user.UserName)
-                            {
-                                var userMap = _mapper.Map(user, userExist);
-                                _dataContext.Users.Update(userMap);
-                                await _dataContext.SaveChangesAsync();
+                var existingUser = await _dataContext.Users.FindAsync(id);
+                if (existingUser == null)
+                    return NotFoundResponse<RUserDto>("User not found.");
 
-                                var getUser = _mapper.Map<RUserDto>(userMap);
-                                response.Datas = getUser;
-                                response.Message = "User updated successfully.";
-                                response.Status = true;
-                            }
-                            else
-                            {
-                                if(emailExist && user.Email != email_username_exit?.Email)
-                                {
-                                    response.Message = "Please choose a different email.";
-                                    response.Status = false;
-                                }
-                                else if(userNameExist && user.UserName != email_username_exit?.UserName)
-                                {
-                                    response.Message = "Username not available.";
-                                    response.Status = false;
-                                }
-                                else
-                                {
-                                    var userMap = _mapper.Map(user, userExist);
-                                    _dataContext.Users.Update(userMap);
-                                    await _dataContext.SaveChangesAsync();
+                if (await IsDuplicateEmailOrUsername(user, id))
+                    return ConflictResponse<RUserDto>("Email or username not available.");
 
-                                    var getUser = _mapper.Map<RUserDto>(userMap);
-                                    response.Datas = getUser;
-                                    response.Message = "User updated successfully.";
-                                    response.Status = true;
-                                }
-                            }
-                        }
-                    }
-                }
+                existingUser.DateUpdate = DateTime.Now;
+
+                _mapper.Map(user, existingUser);
+                _dataContext.Users.Update(existingUser);
+                await _dataContext.SaveChangesAsync();
+
+                return new ResponseModel<RUserDto>
+                {
+                    Datas = _mapper.Map<RUserDto>(existingUser),
+                    Message = "User updated successfully.",
+                    Status = true
+                };
             }
-            catch(Exception error)
+            catch (Exception error)
             {
-                response.Message = $"An error occurred while updating the user: {error.Message}";
-                response.Status = false;
+                _logger.LogError(error, "Error updating user.");
+                return ErrorResponse<RUserDto>("An unexpected error occurred.");
             }
-            return response;
         }
 
         public async Task<ResponseModel<string>> Delete(int id)
         {
-            var response = new ResponseModel<string>();
             try
             {
-                if(_dataContext == null)
+                var user = await _dataContext.Users.FindAsync(id);
+                if (user == null)
+                    return NotFoundResponse<string>("User not found.");
+
+                _dataContext.Users.Remove(user);
+                await _dataContext.SaveChangesAsync();
+
+                return new ResponseModel<string>
                 {
-                    response.Message = "The database is not connected";
-                    response.Status = false;
-                }
-                else
-                {
-                    var userExist = await _dataContext.Users.SingleOrDefaultAsync(u => u.Id == id);
-                    if(id <= 0 || userExist == null)
-                    {
-                        response.Message = "The user not found.";
-                        response.Status = false;
-                    }
-                    else
-                    {
-                        _dataContext.Users.Remove(userExist);
-                        await _dataContext.SaveChangesAsync();
-                        
-                        response.Datas = "FullName : "+userExist.FirstName+" "+userExist.LastName;
-                        response.Message = "User deleted successfully.";
-                        response.Status = true;
-                    }
-                }
+                    Datas = $"FullName : {user.FirstName} {user.LastName}",
+                    Message = "User deleted successfully.",
+                    Status = true
+                };
             }
-            catch(Exception error)
+            catch (Exception error)
             {
-                response.Message = $"An error occurred while deleting the user: {error.Message}";
-                response.Status = false;
+                _logger.LogError(error, "Error deleting user.");
+                return ErrorResponse<string>("An unexpected error occurred.");
             }
-            return response;
         }
 
         public async Task<UserModel> FindUserName(string userName)
         {
-            return await _dataContext.Users.FirstOrDefaultAsync(u => (u.UserName ?? "").Equals(userName, StringComparison.Ordinal)) ?? throw new Exception("User not found.");
-        }   
+            var user = await _dataContext.Users.AsNoTracking()
+                .FirstOrDefaultAsync(u => u.UserName == userName);
+
+            return user ?? throw new KeyNotFoundException("User not found.");
+        }
+
+        // 🔹 Métodos auxiliares para respostas padronizadas
+        private async Task<bool> UserExists(CUserDto user) =>
+            await _dataContext.Users.AnyAsync(u => u.Email == user.Email || u.UserName == user.UserName);
+
+        private async Task<bool> IsDuplicateEmailOrUsername(UUserDto user, int id) =>
+            await _dataContext.Users.AnyAsync(u => (u.Email == user.Email || u.UserName == user.UserName) && u.Id != id);
+
+        private static ResponseModel<T> BadRequestResponse<T>(string message) =>
+            new() { Message = message, Status = false };
+
+        private static ResponseModel<T> NotFoundResponse<T>(string message) =>
+            new() { Message = message, Status = false };
+
+        private static ResponseModel<T> ConflictResponse<T>(string message) =>
+            new() { Message = message, Status = false };
+
+        private static ResponseModel<T> ErrorResponse<T>(string message) =>
+            new() { Message = message, Status = false };
     }
 }

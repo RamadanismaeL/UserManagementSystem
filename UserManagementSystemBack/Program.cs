@@ -82,6 +82,7 @@ builder.Services.AddCors(options =>
         );
 });
 builder.Services.AddJwtAuthentication(configuration);
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
