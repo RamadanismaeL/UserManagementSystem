@@ -9,8 +9,15 @@ using UserManagementSystemBack.src.Models;
 
 namespace UserManagementSystemBack.src.Configs
 {
+    /// <summary>
+    /// User ORM Configuration
+    /// </summary>
     public class UserConfig : IEntityTypeConfiguration<UserModel>
     {
+        /// <summary>
+        /// Configuration my atributs
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<UserModel> builder)
         {
             try

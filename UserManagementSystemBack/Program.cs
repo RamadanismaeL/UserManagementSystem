@@ -1,15 +1,8 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using UserManagementSystemBack.src.Data;
 using UserManagementSystemBack.src.Configs;
 using UserManagementSystemBack.src.Interfaces;
 using UserManagementSystemBack.src.Repositories;
-
-/**
-** @author Ramadan Ismael
-*/
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -27,48 +20,7 @@ builder.Services.AddDbContextPool<UserManagementSystem_db>(ram => ram.UseMySql(c
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    ConfigureSwaggerDoc(options);
-    ConfigureJwtAuthentication(options);
-});
-static void ConfigureSwaggerDoc(SwaggerGenOptions options)
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "User Management System",
-        Version = "v1",
-        Description = "A simple management system ASP.NET Core Web API",
-        Contact = new OpenApiContact
-        {
-            Name = "Admin: Ramadan Ibraimo Ismael",
-            Email = "ramadan.ismael02@gmail.com",
-            Url = new Uri("https://github.com/RamadanismaeL")
-        }
-    });
-}
-static void ConfigureJwtAuthentication(SwaggerGenOptions options)
-{
-    var securitySchema = new OpenApiSecurityScheme
-    {
-        Name = "JWT Authentication",
-        Description = "Enter JWT Bearer token **_only_**",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        Reference = new OpenApiReference
-        {
-            Id = JwtBearerDefaults.AuthenticationScheme,
-            Type = ReferenceType.SecurityScheme
-        }
-    };
-    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securitySchema);
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        { securitySchema, new[] { "Bearer" } }
-    });
-}
+builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddAutoMapper(typeof(UserMap));
@@ -87,8 +39,7 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerConfiguration();
 }
 
 app.UseHttpsRedirection();

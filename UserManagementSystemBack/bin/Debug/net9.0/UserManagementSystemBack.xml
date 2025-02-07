@@ -1,0 +1,610 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UserManagementSystemBack</name>
+    </assembly>
+    <members>
+        <member name="T:UserManagementSystemBack.Migrations.CreatetbUserMigrations">
+            <inheritdoc />
+        </member>
+        <member name="M:UserManagementSystemBack.Migrations.CreatetbUserMigrations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserManagementSystemBack.Migrations.CreatetbUserMigrations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserManagementSystemBack.Migrations.CreatetbUserMigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:UserManagementSystemBack.src.Configs.JwtConfiguration">
+            <summary>
+            Json Web Token Configuration - Add Authentication
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Configs.JwtConfiguration.AddJwtAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            This is a method to authentication
+            </summary>
+            <param name="service"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Configs.SwaggerConfig">
+            <summary>
+            Swagger Configuaration
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Configs.SwaggerConfig.AddSwaggerConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Simple config method
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Configs.SwaggerConfig.UseSwaggerConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Invoke a Swagger interface to test API and show documentation
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Configs.UserConfig">
+            <summary>
+            User ORM Configuration
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Configs.UserConfig.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{UserManagementSystemBack.src.Models.UserModel})">
+            <summary>
+            Configuration my atributs
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Configs.UserEncrypt">
+            <summary>
+            UserEncrypt Password to access this system
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Configs.UserEncrypt.EncryptPassword(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            simple method to encrypt User Password
+            </summary>
+            <param name="value"></param>
+            <param name="logger"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Configs.UserMap">
+            <summary>
+            Data Transfere Objects Configuration
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Configs.UserMap.#ctor">
+            <summary>
+            simple method that do relational
+            </summary>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Controllers.UserController">
+            <summary>
+            User Controller
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Controllers.UserController.#ctor(UserManagementSystemBack.src.Interfaces.IUserRepository,Microsoft.Extensions.Logging.ILogger{UserManagementSystemBack.src.Controllers.UserController})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="userRepository">Take a userRepository method</param>
+            <param name="logger">Invoke error logs</param>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Controllers.UserController.Create(UserManagementSystemBack.src.DTOs.User.CUserDto)">
+            <summary>
+            Create new system user
+            </summary>
+            <param name="user">User object</param>
+            <returns>User Successfully created or an error</returns>
+            <response code="201">User successfully created</response>
+            <response code="400">Invalid Datas in request</response>
+            <response code="409">Conflit - User already exist</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Controllers.UserController.ReadAll">
+            <summary>
+            Return all user already exist
+            </summary>
+            <returns>Users list or error message</returns>
+            <returns>Lista de usuários ou erro caso não haja registros.</returns>
+            <response code="200">Lista de usuários retornada com sucesso.</response>
+            <response code="404">Nenhum usuário encontrado.</response>
+            <response code="500">Erro inesperado no servidor.</response>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Controllers.UserController.Update(UserManagementSystemBack.src.DTOs.User.UUserDto,System.Int32)">
+            <summary>
+            Atualiza os dados de um usuário existente.
+            </summary>
+            <param name="user">Objeto contendo os novos dados do usuário.</param>
+            <param name="id">ID do usuário a ser atualizado.</param>
+            <returns>Retorna os dados atualizados ou erro caso não encontrado.</returns>
+            <response code="200">Usuário atualizado com sucesso.</response>
+            <response code="400">Dados inválidos na requisição.</response>
+            <response code="404">Usuário não encontrado.</response>
+            <response code="500">Erro inesperado no servidor.</response>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Controllers.UserController.Delete(System.Int32)">
+            <summary>
+            Exclui um usuário com base no ID fornecido.
+            </summary>
+            <param name="id">ID do usuário a ser excluído.</param>
+            <returns>Confirmação da exclusão ou erro caso não encontrado.</returns>
+            <response code="204">Usuário deletado com sucesso.</response>
+            <response code="404">Usuário não encontrado.</response>
+            <response code="500">Erro inesperado no servidor.</response>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Data.UserManagementSystem_db">
+            <summary>
+            Project DataBase
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Data.UserManagementSystem_db.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{UserManagementSystemBack.src.Data.UserManagementSystem_db})">
+            <summary>
+            Construtor
+            </summary>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Data.UserManagementSystem_db.Users">
+            <summary>
+            Send all configuration to database
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Data.UserManagementSystem_db.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Simple method to config
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:UserManagementSystemBack.src.DTOs.User.CUserDto">
+            <summary>
+            Create User using DTOs
+            </summary>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.FirstName">
+            <summary>
+            User FirstName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.LastName">
+            <summary>
+            User LastName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.PhoneNumber">
+            <summary>
+            User PhoneNumber
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.Email">
+            <summary>
+            User email address
+            </summary>
+            <value>just EmailAddress like @</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.UserName">
+            <summary>
+            User username to access the system
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.Password">
+            <summary>
+            User Password to validate the system access
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.Profile">
+            <summary>
+            User profile
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.CUserDto.Status">
+            <summary>
+            User Status
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:UserManagementSystemBack.src.DTOs.User.CUserDto.SetPassword">
+            <summary>
+            Simple methos to Password encrypt
+            </summary>
+        </member>
+        <member name="T:UserManagementSystemBack.src.DTOs.User.RUserDto">
+            <summary>
+            Get all database user exist DTOs
+            </summary>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.Id">
+            <summary>
+            user id
+            </summary>
+            <value>int</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.FirstName">
+            <summary>
+            User FirstName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.LastName">
+            <summary>
+            User LastName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.PhoneNumber">
+            <summary>
+            User PhoneNumber
+            </summary>
+            <value>string?</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.Email">
+            <summary>
+            User email address
+            </summary>
+            <value>just EmailAddress like @</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.UserName">
+            <summary>
+            User username to access the system
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.Profile">
+            <summary>
+            User profile
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.Status">
+            <summary>
+            User Status
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.DateRegister">
+            <summary>
+            User date registered
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.RUserDto.DateUpdate">
+            <summary>
+            User date updated anything
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:UserManagementSystemBack.src.DTOs.User.UUserDto">
+            <summary>
+            Update User DTOs
+            </summary>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.UUserDto.FirstName">
+            <summary>
+            User FirstName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.UUserDto.LastName">
+            <summary>
+            User LastName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.UUserDto.PhoneNumber">
+            <summary>
+            User PhoneNumber
+            </summary>
+            <value>string?</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.UUserDto.Email">
+            <summary>
+            User email address
+            </summary>
+            <value>just EmailAddress like @</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.UUserDto.UserName">
+            <summary>
+            User username to access the system
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.UUserDto.Profile">
+            <summary>
+            User profile
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.DTOs.User.UUserDto.Status">
+            <summary>
+            User Status
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Enums.UserProfileEnum">
+            <summary>
+            UserProfileEnum
+            </summary>
+        </member>
+        <member name="F:UserManagementSystemBack.src.Enums.UserProfileEnum.User">
+            <summary>
+            profile user
+            </summary>
+        </member>
+        <member name="F:UserManagementSystemBack.src.Enums.UserProfileEnum.Admin">
+            <summary>
+            profile admin
+            </summary>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Enums.UserStatusEnum">
+            <summary>
+            User Status enum
+            </summary>
+        </member>
+        <member name="F:UserManagementSystemBack.src.Enums.UserStatusEnum.NotSet">
+            <summary>
+            Sentinela
+            </summary>
+        </member>
+        <member name="F:UserManagementSystemBack.src.Enums.UserStatusEnum.Inactive">
+            <summary>
+            User do not access the system
+            </summary>
+        </member>
+        <member name="F:UserManagementSystemBack.src.Enums.UserStatusEnum.Active">
+            <summary>
+            user access
+            </summary>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Interfaces.IUserController">
+            <summary>
+            UserController Interface
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserController.Create(UserManagementSystemBack.src.DTOs.User.CUserDto)">
+            <summary>
+            Create user
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserController.ReadAll">
+            <summary>
+            get user data
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserController.Update(UserManagementSystemBack.src.DTOs.User.UUserDto,System.Int32)">
+            <summary>
+            update users data
+            </summary>
+            <param name="user"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserController.Delete(System.Int32)">
+            <summary>
+            delete any user
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Interfaces.IUserRepository">
+            <summary>
+            User Repository Interface
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserRepository.Create(UserManagementSystemBack.src.DTOs.User.CUserDto)">
+            <summary>
+            Create User using DTOs
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserRepository.ReadAll">
+            <summary>
+            Get users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserRepository.Update(UserManagementSystemBack.src.DTOs.User.UUserDto,System.Int32)">
+            <summary>
+            Update User using DTOs
+            </summary>
+            <param name="user">dtos user</param>
+            <param name="id">id</param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserRepository.Delete(System.Int32)">
+            <summary>
+            delete User using DTOs
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Interfaces.IUserRepository.FindUserName(System.String)">
+            <summary>
+            find some username
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Models.ResponseModel`1">
+            <summary>
+            method to return all datas
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.ResponseModel`1.Datas">
+            <summary>
+            All datas organize here
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.ResponseModel`1.Message">
+            <summary>
+            Message after request
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.ResponseModel`1.Status">
+            <summary>
+            it's true or false
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Models.UserModel">
+            <summary>
+            UserModel
+            </summary>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.Id">
+            <summary>
+            User id
+            </summary> <summary>
+            
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.FirstName">
+            <summary>
+            User FirstName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.LastName">
+            <summary>
+            User LastName
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.PhoneNumber">
+            <summary>
+            User PhoneNumber
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.Email">
+            <summary>
+            User email address
+            </summary>
+            <value>just EmailAddress like @</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.UserName">
+            <summary>
+            User username to access the system
+            </summary>
+            <value>string</value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.Password">
+            <summary>
+            User Password to validate the system access
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.Profile">
+            <summary>
+            User profile
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.Status">
+            <summary>
+            User Status
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.DateRegister">
+            <summary>
+            User date registered
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UserManagementSystemBack.src.Models.UserModel.DateUpdate">
+            <summary>
+            User date updated anything
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Models.UserModel.VerifyPassword(System.String)">
+            <summary>
+            Password Compare
+            </summary>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Models.UserModel.SetNewPassword(System.String)">
+            <summary>
+            Cadastre new Password
+            </summary>
+            <param name="newPassword"></param>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Models.UserModel.GetNewPassword">
+             <summary>
+             Reset Password (Esqueci minha senha) - O sistema gera nova senha temporária e pode enviá-la por e-mail ou SMS
+            string tempPassword = user.GetNewPassword();
+            emailService.Send(user.Email, "Your new password is: " + tempPassword);        
+            User newUser = new User { Email = "user@example.com" };
+            string tempPassword = newUser.GetNewPassword();
+            userRepository.Save(newUser);
+            emailService.Send(newUser.Email, "Welcome! Your temporary password is: " + tempPassword);
+             </summary>
+             <returns>password encryped</returns>
+        </member>
+        <member name="T:UserManagementSystemBack.src.Repositories.UserRepository">
+            <summary>
+            Lógica de Negócio
+            </summary>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Repositories.UserRepository.#ctor(UserManagementSystemBack.src.Data.UserManagementSystem_db,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{UserManagementSystemBack.src.Repositories.UserRepository})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dataContext"></param>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Repositories.UserRepository.Create(UserManagementSystemBack.src.DTOs.User.CUserDto)">
+            <summary>
+            Logic to create new user
+            </summary>
+            <param name="user">userDTO</param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Repositories.UserRepository.ReadAll">
+            <summary>
+            Logic to get all user
+            </summary>
+            <returns>users data</returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Repositories.UserRepository.Update(UserManagementSystemBack.src.DTOs.User.UUserDto,System.Int32)">
+            <summary>
+            Logic to update a user existed
+            </summary>
+            <param name="user"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Repositories.UserRepository.Delete(System.Int32)">
+            <summary>
+            Logic to delete a user existed
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserManagementSystemBack.src.Repositories.UserRepository.FindUserName(System.String)">
+            <summary>
+            Find user whit your username
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

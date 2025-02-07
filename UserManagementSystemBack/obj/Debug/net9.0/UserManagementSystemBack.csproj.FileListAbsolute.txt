@@ -6,6 +6,7 @@
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/bin/Debug/net9.0/UserManagementSystemBack.runtimeconfig.json
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/bin/Debug/net9.0/UserManagementSystemBack.dll
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/bin/Debug/net9.0/UserManagementSystemBack.pdb
+/home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/bin/Debug/net9.0/UserManagementSystemBack.xml
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/bin/Debug/net9.0/AutoMapper.dll
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/bin/Debug/net9.0/BCrypt.Net-Next.dll
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/bin/Debug/net9.0/Humanizer.dll
@@ -114,6 +115,7 @@
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserMana.91289D8B.Up2Date
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.dll
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/refint/UserManagementSystemBack.dll
+/home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.xml
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.pdb
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/UserManagementSystemBack.genruntimeconfig.cache
 /home/ramadan/Documents/Projects/UserManagementSystem/UserManagementSystemBack/obj/Debug/net9.0/ref/UserManagementSystemBack.dll

@@ -2,13 +2,18 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-/**
-** @author Ramadan Ismael
-*/
 namespace UserManagementSystemBack.src.Configs
 {
+    /// <summary>
+    /// Json Web Token Configuration - Add Authentication
+    /// </summary>
     public static class JwtConfiguration
     {
+        /// <summary>
+        /// This is a method to authentication
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="configuration"></param>
         public static void AddJwtAuthentication(this IServiceCollection service, IConfiguration configuration)
         {
             string getAudience = configuration["JwtSettings:Audience"] ?? throw new InvalidOperationException("JwtSettings:Audience is not set");

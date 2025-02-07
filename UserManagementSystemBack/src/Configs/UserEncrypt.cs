@@ -4,17 +4,18 @@
 
 namespace UserManagementSystemBack.src.Configs
 {
+    /// <summary>
+    /// UserEncrypt Password to access this system
+    /// </summary>
     public static class UserEncrypt
     {
         private const int _workFactor = 12;
-        // <summary>
-        /// Encrypts a password using BCrypt.
+        /// <summary>
+        /// simple method to encrypt User Password
         /// </summary>
-        /// <param name="value">The password to encrypt.</param>
-        /// <param name="logger">Optional logger for error logging.</param>
-        /// <returns>The hashed password.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the password is null or empty.</exception>
-        /// <exception cref="Exception">Thrown if an error occurs during encryption.</exception>
+        /// <param name="value"></param>
+        /// <param name="logger"></param>
+        /// <returns></returns>
         public static string EncryptPassword(this string value, ILogger? logger = null)
         {
             if(string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))

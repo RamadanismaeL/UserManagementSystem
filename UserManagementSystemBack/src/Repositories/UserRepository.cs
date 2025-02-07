@@ -4,7 +4,6 @@
 
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using UserManagementSystemBack.src.Data;
 using UserManagementSystemBack.src.DTOs.User;
 using UserManagementSystemBack.src.Interfaces;
@@ -12,12 +11,21 @@ using UserManagementSystemBack.src.Models;
 
 namespace UserManagementSystemBack.src.Repositories
 {
+    /// <summary>
+    /// Lógica de Negócio
+    /// </summary>
     public class UserRepository : IUserRepository
     {
         private readonly UserManagementSystem_db _dataContext;
         private readonly IMapper _mapper;
         private readonly ILogger<UserRepository> _logger;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContext"></param>
+        /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         public UserRepository(UserManagementSystem_db dataContext, IMapper mapper, ILogger<UserRepository> logger)
         {
             _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
@@ -25,6 +33,11 @@ namespace UserManagementSystemBack.src.Repositories
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Logic to create new user
+        /// </summary>
+        /// <param name="user">userDTO</param>
+        /// <returns></returns>
         public async Task<ResponseModel<RUserDto>> Create(CUserDto user)
         {
             if (user == null)
@@ -54,6 +67,10 @@ namespace UserManagementSystemBack.src.Repositories
             }
         }
 
+        /// <summary>
+        /// Logic to get all user
+        /// </summary>
+        /// <returns>users data</returns>
         public async Task<ResponseModel<List<RUserDto>>> ReadAll()
         {
             try
@@ -73,6 +90,12 @@ namespace UserManagementSystemBack.src.Repositories
             }
         }
 
+        /// <summary>
+        /// Logic to update a user existed
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ResponseModel<RUserDto>> Update(UUserDto user, int id)
         {
             if (user == null)
@@ -107,6 +130,11 @@ namespace UserManagementSystemBack.src.Repositories
             }
         }
 
+        /// <summary>
+        /// Logic to delete a user existed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ResponseModel<string>> Delete(int id)
         {
             try
@@ -132,6 +160,11 @@ namespace UserManagementSystemBack.src.Repositories
             }
         }
 
+        /// <summary>
+        /// Find user whit your username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public async Task<UserModel> FindUserName(string userName)
         {
             var user = await _dataContext.Users.AsNoTracking()
