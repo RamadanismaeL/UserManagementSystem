@@ -1,14 +1,26 @@
 <footer class="py-3 fixed-bottom">
   <hr>
   <div class="text-center text-body-secondary">
+    <select (change)="changeLanguage($event)">
+      <option value="en" [selected]="localStor == 'en'">English</option>
+      <option value="pt" [selected]="localStor == 'pt'">Portuguese</option>
+    </select>
+    <span>
+      {{ 'COPYRIGHT' | translate }}&nbsp;<a href="https://github.com/RamadanismaeL">RamadanismaeL</a>. {{ 'ALL_RIGHTS' | translate }}
+    </span>
+  </div>
+</footer>
+
+
+    <!--
+TRANSLATE ANY LANGUAGE:
+$ npm install @ngx-translate/core @ngx-translate/http-loader
+
+==============================================
     <a href="#" class="text-decoration-none">
       <span>
         English
         <i class="bi bi-chevron-down"></i>
       </span>
     </a>
-    <span>
-      © Copyright 2025 UMS. All rights reserved.
-    </span>
-  </div>
-</footer>
+    -->

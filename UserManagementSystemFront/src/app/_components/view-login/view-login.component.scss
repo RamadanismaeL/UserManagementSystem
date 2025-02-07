@@ -1,17 +1,10 @@
 /* From Uiverse.io by micaelgomestavares */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,700&family=Satisfy&display=swap');
+
 
 .ram {
   display: grid;
   place-items: center; /* Centers both horizontally & vertically */
-  height: calc(100vh - 6rem);
-}
-
-.ram11 {
-  display: grid;
-  gap: 15px;
-  align-items: center;
-  width: 500px;
+  height: calc(100vh - 7rem);
 
   h1 {
     color: #fff;
@@ -20,7 +13,15 @@
     font-style: normal;
     font-size: 37pt;
     text-align: center;
+    margin-bottom: -135px;
   }
+}
+
+.ram11 {
+  display: grid;
+  gap: 15px;
+  align-items: center;
+  width: 500px;
 }
 
 .form {
@@ -111,6 +112,7 @@
   color: #2d79f3;
   font-weight: 500;
   cursor: pointer;
+  width: 10em;
 
   &:hover {
     color: #7cabf7;
@@ -174,7 +176,7 @@
 }
 
 .btn:hover {
-  transition: .4s ease-in-out;
+  transition: .2s ease-in-out;
   border: 1px solid #5291f5;
   font-weight: 600;
 }

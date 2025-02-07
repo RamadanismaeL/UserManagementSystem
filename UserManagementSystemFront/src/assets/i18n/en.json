@@ -1,0 +1,16 @@
+{
+  "TITLE": "User Management System",
+  "ENTER_EMAIL_PASSWORD": "Enter your email and password.",
+  "EMAIL": "Email",
+  "ENTER_EMAIL": "Enter your email",
+  "PASSWORD": "Password",
+  "ENTER_PASSWORD": "Enter your Password",
+  "REMEMBER_ME": "Remember me",
+  "FORGOT_PASSWORD": "Forgot password?",
+  "SIGN_IN": "Sign In",
+  "NO_ACCOUNT": "Don't have an account?",
+  "SIGN_UP": "Sign Up",
+  "OR_WITH": "Or With",
+  "COPYRIGHT": "Copyright © 2025 by",
+  "ALL_RIGHTS": "UMS · All rights reserved."
+}

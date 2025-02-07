@@ -1,0 +1,16 @@
+{
+  "TITLE": "Sistema de Gerenciamento de Usuários",
+  "ENTER_EMAIL_PASSWORD": "Digite seu e-mail e senha.",
+  "EMAIL": "E-mail",
+  "ENTER_EMAIL": "Digite seu e-mail",
+  "PASSWORD": "Senha",
+  "ENTER_PASSWORD": "Digite sua senha",
+  "REMEMBER_ME": "Lembrar-me",
+  "FORGOT_PASSWORD": "Esqueceu a senha?",
+  "SIGN_IN": "Entrar",
+  "NO_ACCOUNT": "Não tem uma conta?",
+  "SIGN_UP": "Cadastre-se",
+  "OR_WITH": "Ou com",
+  "COPYRIGHT": "Copyright © 2025 por",
+  "ALL_RIGHTS": "UMS · Todos os direitos reservados."
+}
