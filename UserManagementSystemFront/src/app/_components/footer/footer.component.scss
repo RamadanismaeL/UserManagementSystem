@@ -31,6 +31,10 @@ footer {
     color: #fff;
     margin-right: 5em;
     cursor: pointer;
+
+    &:focus {
+    background-color: black;
+    }
   }
 }
 
