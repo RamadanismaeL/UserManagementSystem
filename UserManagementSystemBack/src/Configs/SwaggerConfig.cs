@@ -20,6 +20,12 @@ namespace UserManagementSystemBack.src.Configs
         /// <param name="service"></param>
         public static void AddSwaggerConfiguration(this IServiceCollection service)
         {
+            /*
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddXmlComments();
+            });
+            */
             service.AddSwaggerGen(options =>
             {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
